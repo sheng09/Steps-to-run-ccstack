@@ -74,6 +74,7 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
     plot_cc_wavefield.py -T 50/4000 -D 0/180 -P out/cc.png --filter bandpass/0.02/0.0666666 \
         -I out/cc.h5 --plt figsize=4/10,title=Test,vmax=0.8,axhist=True,yticks=all,grid=True,interpolation=None,ylabel=True
     ````
+    You can view the generated image by running `display out/cc.png`. Or you can copy it into your local computer with the command`scp` and then view it.
 
 - g. Based on the examples, consider your exercise, such as (1) using different events, (2) trying just a single event, (3) try different stacking parameters, (4) plotting the generated correlation stacks by your own (e.g., invidual time series instead of a 2D greyscale image), etc.
 
