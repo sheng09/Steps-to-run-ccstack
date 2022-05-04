@@ -1,7 +1,7 @@
 Steps to Run Coda Correlation Computations
-----
+=====
 
-Here we introduce how to configure programs/files, how to run coda correlation computations using the package [sacpy](https://github.com/sheng09/sacpy), and how to plot the generated correlograms, etc.
+Here we explain and showcase how to configure programs/files, run coda correlation computations using the package [sacpy](https://github.com/sheng09/sacpy), and plot the generated correlograms, etc.
 
 # 1. Environment Configurations
 
