@@ -76,5 +76,5 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
     ````
     You can view the generated image by running `display out/cc.png`. Or you can copy it into your local computer with the command`scp` and then view it.
 
-- g. Based on the examples, consider your exercise, such as (1) using different events, (2) trying just a single event, (3) try different stacking parameters, (4) plotting the generated correlation stacks by your own (e.g., invidual time series instead of a 2D greyscale image), etc.
+- g. Based on the examples, consider your exercises, such as (1) using different events, (2) trying just a single event, (3) try different stacking parameters, (4) plotting the generated correlation stacks on your own (e.g., invidual time series instead of a 2D greyscale image), etc.
 
