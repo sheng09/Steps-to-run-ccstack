@@ -3,9 +3,9 @@ Steps to Run Coda Correlation Computations
 
 Here we introduce how to configure programs/files, how to run coda correlation computations using the package [sacpy](https://github.com/sheng09/sacpy), and how to plot the generated correlograms, etc.
 
-# Environment Configurations
+# 1. Environment Configurations
 
-## Settings for RSES compute2 users.
+## 1.1 Settings for RSES compute2 users.
 If you can access the server `compute2` at RSES, then configurations will be easy for you. Follow the steps here to configure your environment. Please note, you just need to configure for once, and then everything will be functional to you for always.
 
 1. Configure your enviroment path. In your compute2 home folder, edit the file `~/.bash_profile` by appending the following settings to it:
@@ -30,18 +30,18 @@ If you can access the server `compute2` at RSES, then configurations will be eas
     source ~/.bash_profile
     ```
 
-## In your environment
+## 1.2 Settings for your own environments
 You can download and install [sacpy](https://github.com/sheng09/sacpy) on your machines. 
 
 Manuals coming soon....
 
 
 
-# Computing coda correlations in parallel
+# 2. Computing coda correlations in parallel
 
 We use an executetable files `cc_stack_v2.py` to do the computation. It is within the package [sacpy](https://github.com/sheng09/sacpy). After configuring your environment, especially setting your PATH, you can call it in anywhere without specifying the absolute path to it.
 
-## Examples on compute2
+## 2.1 Examples on compute2
 
 If you can access the server `compute2` at RSES, then there are examples at `/home/seis/sheng/Lucie-Example/`. You can copy this folder or files within it to your directory, as you may dont have access to run files inplace.
 
@@ -75,6 +75,5 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
         -I out/cc.h5 --plt figsize=4/10,title=Test,vmax=0.8,axhist=True,yticks=all,grid=True,interpolation=None,ylabel=True
     ````
 
-
-
+7. Based on the examples, consider your exercise, such as (1) using different events, (2) trying just a single event, (3) try different stacking parameters, (4) plotting the generated correlation stacks by your own (e.g., invidual time series instead of a 2D greyscale image), etc.
 
