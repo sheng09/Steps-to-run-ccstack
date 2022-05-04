@@ -43,7 +43,7 @@ We use an executetable files `cc_stack_v2.py` to do the computation. It is withi
 
 ## Examples on compute2
 
-If you can access the server `compute2` at RSES, then there are examples at `/home/seis/sheng/Lucie-Example/`. 
+If you can access the server `compute2` at RSES, then there are examples at `/home/seis/sheng/Lucie-Example/`. You can copy this folder or files within to your directories, as you may dont have access to run files inplace.
 
 1. Inside the folder, `archive_beyond_21events_ALL_6.8+` is virtual link to our dataset. Inside the `archive_beyond_21events_ALL_6.8+`, you can find `201?/*.a/processed_aligned_ot/*BHZ`, and those are records in SAC format. Each single file is an individual time series at a single station for a single event, and the time series is for records in 0-10 hrs after the event's origin.
 
@@ -54,18 +54,26 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
     ```bash
     orterun -np 6 \                  # use mpi parallel running with 6 procs
     cc_stack_sac.py \                
-     -I "archive_beyond_21events_ALL_6.8+/201[01]/20*.a/processed_aligned_ot/*BHZ" \ # input wildcards, make sure use ""
-     -T -5/10800/32400 -D 0.1 \                                                      # time window and sampling time interval
-     -O out/cc --out_format hdf5,sac --log out/log \                                 # where to output, output format, and where to output logs
-     --pre_detrend --pre_taper 0.005 \                                               # pre-processing parameters
-     --stack_dist 0/180/1 --daz -0.1/20 --gcd_ev -0.1/30 \                           # stacking methods and selections of station pairs
-     --w_temporal 128.0/0.02/0.06667 --w_spec 0.02 \                                 # whitening parameters for global coda correlation computations
-     --post_fold --post_taper 0.005 --post_filter bandpass/0.01/0.1 --post_norm      # post-processing for the obtained correlatin stacks
+      -I "archive_beyond_21events_ALL_6.8+/201[01]/20*.a/processed_aligned_ot/*BHZ" \ # input wildcards, make sure use ""
+      -T -5/10800/32400 -D 0.1 \                                                      # time window and sampling time interval
+      -O out/cc --out_format hdf5,sac --log out/log \                                 # where to output, output format, and where to output logs
+      --pre_detrend --pre_taper 0.005 \                                               # pre-processing parameters
+      --stack_dist 0/180/1 --daz -0.1/20 --gcd_ev -0.1/30 \                           # stacking methods and selections of station pairs
+      --w_temporal 128.0/0.02/0.06667 --w_spec 0.02 \                                 # whitening parameters for global coda correlation computations
+      --post_fold --post_taper 0.005 --post_filter bandpass/0.01/0.1 --post_norm      # post-processing for the obtained correlatin stacks
 
     ```
 
-4. `run_fast.sh` is similar to `run.sh` but take h5 format inputs, and hence it is much faster. It generates outputs to the folder `out_fast/`.
+4. After running, you can check outputs inside the folder `out/`. As we specify `--out_format hdf5,sac`, the running output correlation stacks in both sac and h5 format. The former with filenames `cc_000.0_.sac`...`cc_180.0_.sac`, and the latter `cc.h5`, are for correlation stacks. The files `log_000.txt`...`log_005.txt` are log files in plain text.
 
+5. `run_fast.sh` is similar to `run.sh` but take h5 format inputs, and hence it is much faster. It generates outputs to the folder `out_fast/`.
+
+
+6. Plot the generated correlograms using the script `plot.sh`. It contains the commands using another executable file `plot_cc_wavefield.py` within the [sacpy](https://github.com/sheng09/sacpy). The same, it is self-documented. You can simply run `plot_cc_wavefield.py` without appending any args to view its manual. Below is a simplified example that takes the `out/cc.h5` as input and generate the figure `out/cc.png`.
+    ````bash
+    plot_cc_wavefield.py -T 50/4000 -D 0/180 -P out/cc.png --filter bandpass/0.02/0.0666666 \
+        -I out/cc.h5 --plt figsize=4/10,title=Test,vmax=0.8,axhist=True,yticks=all,grid=True,interpolation=None,ylabel=True
+    ````
 
 
 
