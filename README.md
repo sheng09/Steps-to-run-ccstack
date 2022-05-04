@@ -45,11 +45,11 @@ We use an executetable files `cc_stack_v2.py` to do the computation. It is withi
 
 If you can access the server `compute2` at RSES, then there are examples at `/home/seis/sheng/Lucie-Example/`. You can copy this folder or files within it to your directory, as you may dont have access to run files inplace.
 
-- a. Inside the folder, `archive_beyond_21events_ALL_6.8+` is virtual link to our dataset. Inside the `archive_beyond_21events_ALL_6.8+`, you can find `201?/*.a/processed_aligned_ot/*BHZ`, and those are records in sac format. Each single file is an individual time series at a single station for a single event, and all the time series are for records in 0-10 hrs after the event's origin.
+- a. Inside the folder, `archive_beyond_21events_ALL_6.8+` is a virtual link to our dataset. Inside the `archive_beyond_21events_ALL_6.8+`, you can find `201?/*.a/processed_aligned_ot/*BHZ`, and those are records in sac format. Each single file is an individual time series at a single station for a single event, and all the time series are for records in 0-10 hrs after the event's origin.
 
-- b. Also, inside the folder, `archive_beyond_21events_ALL_6.8+/h5vol/*.h5` store the same data but in different format. The `*.h5` files are in hdf5 format. Each of the h5 files corresponds to a single event, and a single h5 file contains multiple records at many stations. Therefore, we only have ~200 h5 files instead of millions of sac files, and that can accelerate the I/O of our computations. Please note, both the sac format files and the h5 format files can be used as the input of our package [sacpy](https://github.com/sheng09/sacpy).
+- b. Also, inside the folder, `archive_beyond_21events_ALL_6.8+/h5vol/*.h5` stores the same data but in different format. The `*.h5` files are in hdf5 format. Each of the h5 files corresponds to a single event, and a single h5 file contains multiple records at many stations. Therefore, we only have ~200 h5 files instead of millions of sac files, and that can accelerate the I/O of our computations. Please note, both the sac format files and the h5 format files can be used as the input of our package [sacpy](https://github.com/sheng09/sacpy).
 
-- c. `run.sh` contains an example for running the computation. Its use sac format as input. It generates outputs to the folder `out/`. From it, you can view how we use the `cc_stack_v2.py` with many args. Also, you can find all available args and detailed explanations simply by running `cc_stack_v2.py` without appending any args. To make it easy, a simple explanation is below. Please note, the `orterun -np 6` or `mpirun -np 6` preceding the command are for mpi parallel running, and obviously we use 6 procs in the example. 
+- c. `run.sh` contains an example for running the computation. It uses sac format as input. It generates outputs to the folder `out/`. By opening `run.sh`, you can view how we use `cc_stack_v2.py` with many args. Also, you can find all available args and detailed explanations simply by running `cc_stack_v2.py` without appending any args. To make it easy, a simple explanation is below. Please note, the `orterun -np 6` or `mpirun -np 6` preceding the command is for mpi parallel running, and obviously we use 6 procs in the example. 
 
     ```bash
     orterun -np 6 \                  # use mpi parallel running with 6 procs
@@ -64,12 +64,12 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
 
     ```
 
-- d. After running, you can check outputs inside the folder `out/`. As we specify `--out_format hdf5,sac`, the running output correlation stacks in both sac and h5 format. The former with filenames `cc_000.0_.sac`...`cc_180.0_.sac`, and the latter `cc.h5`, are for correlation stacks. The files `log_000.txt`...`log_005.txt` are log files in plain text.
+- d. After running, you can check outputs inside the folder `out/`. As we specify `--out_format hdf5,sac`, the running outputs correlation stacks in both sac and h5 format. The former has filenames `cc_000.0_.sac`...`cc_180.0_.sac`, and the latter `cc.h5`. The files `log_000.txt`...`log_005.txt` are log files in plain text format.
 
 - e. `run_fast.sh` is similar to `run.sh` but take h5 format inputs, and hence it is much faster. It generates outputs to the folder `out_fast/`.
 
 
-- f. Plot the generated correlograms using the script `plot.sh`. It contains the commands using another executable file `plot_cc_wavefield.py` within the [sacpy](https://github.com/sheng09/sacpy). The same, it is self-documented. You can simply run `plot_cc_wavefield.py` without appending any args to view its manual. Below is a simplified example that takes the `out/cc.h5` as input and generate the figure `out/cc.png`. Besides, you can open the file `plot_cc_wavefield.py` and modify it by yourself or make it suit your purpose. Or, you can manipulate the sac files `cc_000.0_.sac`...`cc_180.0_.sac`.
+- f. Plot the generated correlograms using the script `plot.sh`. It contains the commands using another executable file `plot_cc_wavefield.py` within the [sacpy](https://github.com/sheng09/sacpy). The same, it is self-documented. You can simply run `plot_cc_wavefield.py` without appending any args to view detailed explanation for how to use it. Below is a simple example that takes the `out/cc.h5` as input and generate the figure `out/cc.png`. Besides, you can view the file `plot_cc_wavefield.py` to see how we read correlation stacks from the file `out/cc.h5`. You can modify it to make it suit your purpose. Or, you can manipulate the sac files `cc_000.0_.sac`...`cc_180.0_.sac`.
     ````bash
     plot_cc_wavefield.py -T 50/4000 -D 0/180 -P out/cc.png --filter bandpass/0.02/0.0666666 \
         -I out/cc.h5 --plt figsize=4/10,title=Test,vmax=0.8,axhist=True,yticks=all,grid=True,interpolation=None,ylabel=True
