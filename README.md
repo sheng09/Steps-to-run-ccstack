@@ -31,7 +31,7 @@ If you can access the server `compute2` at RSES, then configurations will be eas
     ```
 - c. Install required python3 modules:
     ```
-    pip3 install --user cffi mpi4py h5py pyfftw
+    pip3 install --user numba cffi mpi4py h5py pyfftw
     ```
 
 ## 1.2 Settings for your own environments
@@ -71,6 +71,17 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
 - d. After running, you can check outputs inside the folder `out/`. As we specify `--out_format hdf5,sac`, the running outputs correlation stacks in both sac and h5 format. The former has filenames `cc_000.0_.sac`...`cc_180.0_.sac`, and the latter `cc.h5`. The files `log_000.txt`...`log_005.txt` are log files in plain text format.
 
 - e. `run_fast.sh` is similar to `run.sh` but take h5 format inputs, and hence it is much faster. It generates outputs to the folder `out_fast/`.
+    ```bash
+    orterun -np 6 \
+    cc_stack_v2.py \
+       -I "archive_beyond_21events_ALL_6.8+/h5vol/201[01]*h5" --input_format h5 \ # please note now we use h5 format input
+       -T -5/10800/32400 -D 0.1 \
+       -O out_fast/cc --out_format hdf5,sac --log out_fast/log \
+       --pre_detrend --pre_taper 0.005 \
+       --stack_dist 0/180/1 --daz -0.1/20 --gcd_ev -0.1/30 \
+       --w_temporal 128.0/0.02/0.06667 --w_spec 0.02 \
+       --post_fold --post_taper 0.005 --post_filter bandpass/0.01/0.1 --post_norm
+    ```
 
 
 - f. Plot the generated correlograms using the script `plot.sh`. It contains the commands using another executable file `plot_cc_wavefield.py` within the [sacpy](https://github.com/sheng09/sacpy). The same, it is self-documented. You can simply run `plot_cc_wavefield.py` without appending any args to view detailed explanation for how to use it. Below is a simple example that takes the `out/cc.h5` as input and generate the figure `out/cc.png`. Besides, you can view the file `plot_cc_wavefield.py` to see how we read correlation stacks from the file `out/cc.h5`. You can modify it to make it suit your purpose. Or, you can manipulate the sac files `cc_000.0_.sac`...`cc_180.0_.sac`.
