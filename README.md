@@ -29,6 +29,10 @@ If you can access the server `compute2` at RSES, then configurations will be eas
     ```
     source ~/.bash_profile
     ```
+- c. Install required python3 modules:
+    ```
+    pip3 install --user cffi mpi4py h5py pyfftw
+    ```
 
 ## 1.2 Settings for your own environments
 You can download and install [sacpy](https://github.com/sheng09/sacpy) on your machines. 
