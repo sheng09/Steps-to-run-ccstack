@@ -53,7 +53,7 @@ If you can access the server `compute2` at RSES, then there are examples at `/ho
 
     ```bash
     orterun -np 6 \                  # use mpi parallel running with 6 procs
-    cc_stack_sac.py \                
+    cc_stack_v2.py \                
       -I "archive_beyond_21events_ALL_6.8+/201[01]/20*.a/processed_aligned_ot/*BHZ" \ # input wildcards, make sure use ""
       -T -5/10800/32400 -D 0.1 \                                                      # time window and sampling time interval
       -O out/cc --out_format hdf5,sac --log out/log \                                 # where to output, output format, and where to output logs
